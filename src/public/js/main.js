@@ -132,7 +132,6 @@ function allRoundFinish(){
 function handleRoomSubmit(event) {
     event.preventDefault();
     const input = welcome.querySelector("#room input");
-    //const nickname = "가히"; // 추후 db접근해서 닉넴가져오거나
     socket.emit("enter_room", input.value, showBeforeStartRoom);
     roomName = input.value;
     input.value = "";
