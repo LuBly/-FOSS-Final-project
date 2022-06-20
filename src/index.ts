@@ -60,10 +60,11 @@ wsServer.on("connection", socket => {
             console.log(socket.rooms);
             done(roomName, countRoom(roomName));
             sockets.push(socket);
-			users.set(socket.data.nickname, 0);	//여기로 옮겼엉
+			users.set(socket.data.nickname, 0);
             socket.to(roomName).emit("welcome", socket.data.nickname, roomName, countRoom(roomName));
         }
     });
+	
     socket.on("nickname", (nickname) => {
 		socket.data.nickname = nickname;
 		console.log("socket.data.nickname: ", socket.data.nickname);
@@ -80,11 +81,6 @@ wsServer.on("connection", socket => {
 
     socket.on("gameStart", (roomName) => {
         if (readyStorage.length === countRoom(roomName)){
-            // 코드 추가했엉
-			/*for (let i = 0; i < readyStorage.length; i++)
-			{
-				users.set(socket.data.nickname, 0);
-			}*/
             usersList = JSON.stringify(Array.from(users));
             wsServer.sockets.in(roomName).emit("scoreboard display", usersList);
 			socket.emit("showGameRoom");
